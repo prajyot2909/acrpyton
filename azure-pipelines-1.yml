@@ -50,14 +50,20 @@ stages:
         deploymentOutputs: 'acr-output'
 
  
-# - stage : CodeDeployment
-#   dependsOn: InfrastructureDeployment 
-#   pool:
-#    vmImage: 'ubuntu-latest' 
-#   jobs:
-#     - job: CodeDeployment
-#       steps:
-#         - 
-
+- stage : CodeDeployment
+  dependsOn: InfrastructureDeployment 
+  pool:
+   vmImage: 'ubuntu-latest' 
+  jobs:
+    - job: CodeDeployment
+      steps:
+        - task: PowerShell@2
+          inputs:
+            targetType: 'inline'
+            script: |
+              # Write your PowerShell commands here.
+              Write-Host "$(acrName)"
+              
+              
     
 
