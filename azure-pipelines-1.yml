@@ -33,21 +33,31 @@ stages:
       inputs:
         buildType: 'current'
         artifactName: 'drop'
-        targetPath: '$(Build.ArtifactStagingDirectory)'
-    
+        targetPath: '$(Build.ArtifactStagingDirectory)'   
 
     - task: AzureResourceManagerTemplateDeployment@3
       inputs:
-          deploymentScope: 'Resource Group'
-          azureResourceManagerConnection: 'Free Trial(85e6bef8-2ce5-4936-b26a-102ce2668487)'
-          subscriptionId: '85e6bef8-2ce5-4936-b26a-102ce2668487'
-          action: 'Create Or Update Resource Group'
-          resourceGroupName: 'madhur-rg'
-          location: 'Central US'
-          templateLocation: 'Linked artifact'
-          csmFile: '/home/vsts/work/1/a/ACRAKS.json'
-          csmParametersFile: '/home/vsts/work/1/a/ACRAKSParamter.json'
-          deploymentMode: 'Incremental'
+        deploymentScope: 'Resource Group'
+        azureResourceManagerConnection: 'Free Trial(85e6bef8-2ce5-4936-b26a-102ce2668487)'
+        subscriptionId: '85e6bef8-2ce5-4936-b26a-102ce2668487'
+        action: 'Create Or Update Resource Group'
+        resourceGroupName: 'madhur-rg'
+        location: 'Central US'
+        templateLocation: 'Linked artifact'
+        csmFile: '/home/vsts/work/1/a/ACRAKS.json'
+        csmParametersFile: '/home/vsts/work/1/a/ACRAKSParamter.json'
+        deploymentMode: 'Incremental'
+        deploymentOutputs: 'acr-output'
+
+ 
+# - stage : CodeDeployment
+#   dependsOn: InfrastructureDeployment 
+#   pool:
+#    vmImage: 'ubuntu-latest' 
+#   jobs:
+#     - job: CodeDeployment
+#       steps:
+#         - 
 
     
 
