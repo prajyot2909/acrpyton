@@ -62,7 +62,7 @@ stages:
             targetType: 'inline'
             script: |
               # Write your PowerShell commands here.
-              Write-Host "$(acrName)"
+              Write-Host "$(acr-output)"
               
               
     
