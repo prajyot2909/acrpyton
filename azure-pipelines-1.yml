@@ -27,7 +27,7 @@ stages:
     - task: DownloadPipelineArtifact@2
       inputs:
         buildType: 'current'
-        artifactName: 'artifact01'
+        artifactName: 'drop'
         targetPath: '$(Build.ArtifactStagingDirectory)'
     
 
@@ -40,8 +40,8 @@ stages:
           resourceGroupName: 'madhur-rg'
           location: 'Central US'
           templateLocation: 'Linked artifact'
-          csmFile: '$(Build.ArtifactStagingDirectory)/artifact01/armtemplate/ACRAKS.json'
-          csmParametersFile: '$(Build.ArtifactStagingDirectory)/artifact01/armtemplate/ACRAKSParameter.json'
+          csmFile: '$(Build.ArtifactStagingDirectory)/drop/armtemplate/ACRAKS.json'
+          csmParametersFile: '$(Build.ArtifactStagingDirectory)/drop/armtemplate/ACRAKSParameter.json'
           deploymentMode: 'Incremental'
 
     
