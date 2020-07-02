@@ -7,7 +7,7 @@ trigger:
 - master
 
 stages:
-- stage : Generate Artefact
+- stage : GenerateArtefact
   jobs:
     - job: Artefact
       steps:
