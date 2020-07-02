@@ -22,8 +22,15 @@ stages:
   jobs: 
   - job: Infrasturcture
     steps:
-      - task: AzureResourceManagerTemplateDeployment@3
-        inputs:
+    - task: DownloadBuildArtifacts@0
+      inputs:
+        buildType: 'current'
+        downloadType: 'single'
+        artifactName: 'artifact01'
+        downloadPath: '$(System.ArtifactsDirectory)'
+
+    - task: AzureResourceManagerTemplateDeployment@3
+      inputs:
           deploymentScope: 'Resource Group'
           azureResourceManagerConnection: 'Free Trial(85e6bef8-2ce5-4936-b26a-102ce2668487)'
           subscriptionId: '85e6bef8-2ce5-4936-b26a-102ce2668487'
@@ -31,8 +38,8 @@ stages:
           resourceGroupName: 'madhur-rg'
           location: 'Central US'
           templateLocation: 'Linked artifact'
-          csmFile: '$(System.DefaultWorkingDirectory)/armtemplate/ACRAKS.json'
-          csmParametersFile: '$(System.DefaultWorkingDirectory)/armtemplate/ACRAKSParameter.json'
+          csmFile: '$(System.ArtifactsDirectory)/armtemplate/ACRAKS.json'
+          csmParametersFile: '$(System.ArtifactsDirectory)/armtemplate/ACRAKSParameter.json'
           deploymentMode: 'Incremental'
 
     
