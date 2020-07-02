@@ -1,0 +1,16 @@
+apiVersion : apps/v1beta1
+kind: Deployment
+metadata:
+  name: prajyotacrpyton 
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: prajyotacrpyton 
+    spec:
+      containers:
+        - name: prajyotacrpyton 
+          image: acrcluster.azurecr.io/prajyotacrpyton
+          ports:
+          - containerPort: 5000
