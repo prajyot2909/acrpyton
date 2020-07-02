@@ -15,7 +15,6 @@ stages:
           inputs:
             targetPath: $(System.DefaultWorkingDirectory)/
             artifactName: artifact01
-- 
       
 - stage : Infrastructure Deployment
   pool:
