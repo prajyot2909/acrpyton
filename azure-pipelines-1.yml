@@ -45,8 +45,8 @@ stages:
           resourceGroupName: 'madhur-rg'
           location: 'Central US'
           templateLocation: 'Linked artifact'
-          csmFile: '$(Build.ArtifactStagingDirectory)/drop/ACRAKS.json'
-          csmParametersFile: '$(Build.ArtifactStagingDirectory)/drop/ACRAKSParameter.json'
+          csmFile: '/home/vsts/work/1/a/ACRAKS.json'
+          csmParametersFile: '/home/vsts/work/1/a/ACRAKSParamter.json'
           deploymentMode: 'Incremental'
 
     
