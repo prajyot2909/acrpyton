@@ -12,7 +12,7 @@ stages:
     - job: Artefact
       steps:
         - publish: $(System.DefaultWorkingDirectory)
-          artifact : Code
+          artifact : code
       
 # - stage : Infrastructure Deployment
 #   pool:
