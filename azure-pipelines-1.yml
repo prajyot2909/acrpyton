@@ -22,12 +22,12 @@ stages:
   jobs: 
   - job: Infrasturcture
     steps:
-    - task: DownloadBuildArtifacts@0
+    - task: DownloadPipelineArtifact@2
       inputs:
         buildType: 'current'
-        downloadType: 'single'
         artifactName: 'artifact01'
-        downloadPath: '$(System.ArtifactsDirectory)'
+        targetPath: '$(Pipeline.Workspace)'
+    
 
     - task: AzureResourceManagerTemplateDeployment@3
       inputs:
@@ -38,8 +38,8 @@ stages:
           resourceGroupName: 'madhur-rg'
           location: 'Central US'
           templateLocation: 'Linked artifact'
-          csmFile: '/home/vsts/work/1/a/artifact01/armtemplate/ACRAKS.json'
-          csmParametersFile: '/home/vsts/work/1/a/artifact01/armtemplate/ACRAKSParameter.json'
+          csmFile: '$(Pipeline.Workspace)/artifact01/armtemplate/ACRAKS.json'
+          csmParametersFile: '$(Pipeline.Workspace)/artifact01/armtemplate/ACRAKSParameter.json'
           deploymentMode: 'Incremental'
 
     
