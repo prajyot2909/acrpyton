@@ -11,10 +11,10 @@ stages:
   jobs:
     - job: Artefact
       steps:
-        - task: PublishPipelineArtifact@1
+        - task: PublishBuildArtifacts@1
           inputs:
-            targetPath: '$(Build.ArtfactStagingDirectory)'
-            artifactName: 'artifact01'
+           PathtoPublish: '$(Build.ArtfactStagingDirectory)'
+           artifactName: 'artifact01'
       
 - stage : InfrastructureDeployment
   pool:
