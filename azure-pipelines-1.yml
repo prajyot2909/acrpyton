@@ -11,8 +11,10 @@ stages:
   jobs:
     - job: Artefact
       steps:
-        - publish: $(System.DefaultWorkingDirectory)
-          artifact : code
+        - task: PublishPipelineArtifact@1
+          inputs:
+            targetPath: $(System.DefaultWorkingDirectory)/
+            artifactName: WebApp
       
 # - stage : Infrastructure Deployment
 #   pool:
