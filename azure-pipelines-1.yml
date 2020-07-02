@@ -11,10 +11,12 @@ stages:
   jobs:
     - job: Artefact
       steps:
-        - task: PublishBuildArtifacts@1
-          inputs:
-           PathtoPublish: '$(Build.ArtfactStagingDirectory)'
-           artifactName: 'artifact01'
+      - task: PublishBuildArtifacts@1
+        inputs:
+          PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+          ArtifactName: 'drop'
+          publishLocation: 'Container'
+        
       
 - stage : InfrastructureDeployment
   pool:
@@ -26,7 +28,7 @@ stages:
       inputs:
         buildType: 'current'
         artifactName: 'artifact01'
-        targetPath: '$(Build.ArtfactStagingDirectory)'
+        targetPath: '$(Build.ArtifactStagingDirectory)'
     
 
     - task: AzureResourceManagerTemplateDeployment@3
@@ -38,8 +40,8 @@ stages:
           resourceGroupName: 'madhur-rg'
           location: 'Central US'
           templateLocation: 'Linked artifact'
-          csmFile: '$(Build.ArtfactStagingDirectory)/artifact01/armtemplate/ACRAKS.json'
-          csmParametersFile: '$(Build.ArtfactStagingDirectory)/artifact01/armtemplate/ACRAKSParameter.json'
+          csmFile: '$(Build.ArtifactStagingDirectory)/artifact01/armtemplate/ACRAKS.json'
+          csmParametersFile: '$(Build.ArtifactStagingDirectory)/artifact01/armtemplate/ACRAKSParameter.json'
           deploymentMode: 'Incremental'
 
     
