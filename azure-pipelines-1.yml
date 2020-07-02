@@ -16,7 +16,7 @@ stages:
             targetPath: $(System.DefaultWorkingDirectory)/
             artifactName: artifact01
       
-- stage : Infrastructure Deployment
+- stage : InfrastructureDeployment
   pool:
    vmImage: 'ubuntu-latest' 
   jobs: 
