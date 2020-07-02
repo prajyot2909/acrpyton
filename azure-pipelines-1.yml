@@ -13,7 +13,7 @@ stages:
       steps:
         - task: PublishPipelineArtifact@1
           inputs:
-            targetPath: $(System.DefaultWorkingDirectory)/
+            targetPath: $(System.DefaultWorkingDirectory)
             artifactName: artifact01
       
 - stage : InfrastructureDeployment
