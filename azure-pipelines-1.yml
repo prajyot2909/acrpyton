@@ -36,7 +36,7 @@ stages:
         targetPath: '$(Build.ArtifactStagingDirectory)'   
 
     - task: AzureResourceManagerTemplateDeployment@3
-      inputs:
+      inputs:      
         deploymentScope: 'Resource Group'
         azureResourceManagerConnection: 'Free Trial(85e6bef8-2ce5-4936-b26a-102ce2668487)'
         subscriptionId: '85e6bef8-2ce5-4936-b26a-102ce2668487'
@@ -49,6 +49,16 @@ stages:
         deploymentMode: 'Incremental'
         deploymentName: 'acrDeployement'
         deploymentOutputs: 'acrName'
+    - task: ARM Outputs@5
+      inputs:
+        ConnectedServiceNameSelector: 'ConnectedServiceNameARM'
+        ConnectedServiceNameARM: 'Free Trial(85e6bef8-2ce5-4936-b26a-102ce2668487)'
+        resourceGroupName: 'madhur-rg'
+        prefix: 'pipe-'
+        outputNames: 'acrName'
+        whenLastDeploymentIsFailed: 'latestSuccesful'
+        deploymentNameFilter: 'acrDeployement'
+    
 
  
 - stage : CodeDeployment
