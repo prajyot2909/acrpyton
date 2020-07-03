@@ -48,7 +48,7 @@ stages:
         csmParametersFile: '/home/vsts/work/1/a/ACRAKSParamter.json'
         deploymentMode: 'Incremental'
         deploymentName: 'acrDeployement'
-        deploymentOutputs: 'acroutput'
+        deploymentOutputs: 'acrName'
 
  
 - stage : CodeDeployment
@@ -63,7 +63,8 @@ stages:
             targetType: 'inline'
             script: |
               # Write your PowerShell commands here.
-              Write-Host "$(acroutput)"
+              
+              Write-Host "$(acrName)"
               
               
     
