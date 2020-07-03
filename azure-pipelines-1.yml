@@ -49,6 +49,14 @@ stages:
         deploymentMode: 'Incremental'
         deploymentName: 'acrDeployement'
         deploymentOutputs: 'acrName'
+            
+    - task: PowerShell@2
+      inputs:
+            targetType: 'inline'
+            script: |
+              # Write your PowerShell commands here.
+              
+              Write-Host "$(acrName)"
     - task: ARM Outputs@5
       inputs:
         ConnectedServiceNameSelector: 'ConnectedServiceNameARM'
@@ -68,13 +76,7 @@ stages:
   jobs:
     - job: CodeDeployment
       steps:
-        - task: PowerShell@2
-          inputs:
-            targetType: 'inline'
-            script: |
-              # Write your PowerShell commands here.
-              
-              Write-Host "$(acrName)"
+
               
               
     
