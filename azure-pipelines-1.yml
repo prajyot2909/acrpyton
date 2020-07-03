@@ -69,13 +69,13 @@ stages:
     
 
  
-- stage : CodeDeployment
-  dependsOn: InfrastructureDeployment 
-  pool:
-   vmImage: 'ubuntu-latest' 
-  jobs:
-    - job: CodeDeployment
-      steps:
+# - stage : CodeDeployment
+#   dependsOn: InfrastructureDeployment 
+#   pool:
+#    vmImage: 'ubuntu-latest' 
+#   jobs:
+#     - job: CodeDeployment
+    
 
               
               
