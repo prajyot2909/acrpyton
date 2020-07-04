@@ -70,6 +70,7 @@ stages:
           $AKS = $json.parameters | select acrName
           $ACR = $json.parameters | select clusterName
           
+          Write-Host "Hello World"
           Write-Host "$(AKS)"
           Write-Host "$(ACR)"
 
