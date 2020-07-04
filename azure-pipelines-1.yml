@@ -64,11 +64,11 @@ stages:
         azureSubscription: 'Free Trial(85e6bef8-2ce5-4936-b26a-102ce2668487)'
         ScriptType: 'InlineScript'
         Inline: |
-
-          $json = $(acrName)
+        
+          $json = (Get-Content "/home/vsts/work/1/a/ACRAKSParamter.json" -Raw) | ConvertFrom-Json
           
-          $AKS = $json.clusterName  | select name
-          $ACR = $json.acrName | select name
+          $AKS = $json.parameters | | select acrName
+          $ACR = $json.parameters | | select clusterName
           
           Write-Host $(AKS)
           Write-Host $(ACR)
