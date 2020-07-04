@@ -65,7 +65,7 @@ stages:
         ScriptType: 'InlineScript'
         Inline: |
         
-          $json = (Get-Content "/home/vsts/work/1/a/ACRAKSParamter.json" -Raw) | ConvertFrom-Json
+          $json = (Get-Content "/home/vsts/work/1/a/ACRAKS.json" -Raw) | ConvertFrom-Json
           Write-Host "JSON:($json)"
           
           
