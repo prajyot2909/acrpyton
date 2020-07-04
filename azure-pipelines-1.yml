@@ -67,7 +67,7 @@ stages:
         
           # $json = (Get-Content "/home/vsts/work/1/a/ACRAKS.json" -Raw) | ConvertFrom-Json
           # Write-Host "JSON:($json)"
-          $json = ConvertFrom-Json '$(acrName)'
+          $json = ConvertFrom-Json '$(acrName)' | select acrName
           Write-Host "JSON:($json)"
           
           $AKS = $json.acrName | select value
