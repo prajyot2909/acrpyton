@@ -67,8 +67,8 @@ stages:
         
           $json = (Get-Content "/home/vsts/work/1/a/ACRAKSParamter.json" -Raw) | ConvertFrom-Json
           
-          $AKS = $json.parameters | | select acrName
-          $ACR = $json.parameters | | select clusterName
+          $AKS = $json.parameters |  select acrName
+          $ACR = $json.parameters |  select clusterName
           
           Write-Host $(AKS)
           Write-Host $(ACR)
