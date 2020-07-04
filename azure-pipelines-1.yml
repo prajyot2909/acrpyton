@@ -64,7 +64,7 @@ stages:
         azureSubscription: 'Free Trial(85e6bef8-2ce5-4936-b26a-102ce2668487)'
         ScriptType: 'InlineScript'
         Inline: |
-          $json = ConvertFrom-Json '$(acrName)'.acrName
+          $json = ConvertFrom-Json '$(acrName)'
           Write-Host "JSON:($json)"
           
           $AKS = $json.acrName | select value
