@@ -112,7 +112,7 @@
   },
   "resources": [
     {
-      "name": "[parameters('acrName')]",
+      "name": "acrCluster01",
       "type": "Microsoft.ContainerRegistry/registries",
       "apiVersion": "2019-05-01",
       "location": "[parameters('location')]",
@@ -132,7 +132,7 @@
     {
             "type": "Microsoft.ContainerService/managedClusters",
             "apiVersion": "2018-03-31",
-            "name": "[parameters('clusterName')]",
+            "name": "AKSCluster01",
             "location": "[parameters('location')]",
             "properties": {
                 "dnsPrefix": "[parameters('dnsPrefix')]",
