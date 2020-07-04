@@ -57,15 +57,26 @@ stages:
               # Write your PowerShell commands here.
               
               Write-Host "$(acrName)"
-    - task: ARM Outputs@5
+    
+    - task: AzurePowerShell@5
+      name: AzurePowershell
       inputs:
-        ConnectedServiceNameSelector: 'ConnectedServiceNameARM'
-        ConnectedServiceNameARM: 'Free Trial(85e6bef8-2ce5-4936-b26a-102ce2668487)'
-        resourceGroupName: 'madhur-rg'
-        prefix: 'pipe-'
-        outputNames: 'acrName'
-        whenLastDeploymentIsFailed: 'latestSuccesful'
-        deploymentNameFilter: 'acrDeployement'
+        azureSubscription: 'Free Trial(85e6bef8-2ce5-4936-b26a-102ce2668487)'
+        ScriptType: 'InlineScript'
+        Inline: |
+          $json = (Get-Content "$(system.defaultworkingdirectory)\template.json" -Raw) | ConvertFrom-Json
+          
+          $AKS = $json.resources | where {$_.type -eq "Microsoft.ContainerService/managedClusters"} | select name
+          $ACR = $json.resources | where {$_.type -eq "Microsoft.ContainerRegistry/registries"} | select name
+          
+          echo "##vso[task.setvariable variable=ACRName;isOutput=true]$($ACR.name)"
+          echo "##vso[task.setvariable variable=AKSName;isOutput=true]$($AKS.name)"
+          
+          $ACRCred = Get-AzContainerRegistryCredential -ResourceGroupName "MyResourceGroup" -Name $($ACR.name)
+          
+          echo "##vso[task.setvariable variable=UserName;isOutput=true]$($ACRCred.Username)"
+          echo "##vso[task.setvariable variable=Password;isOutput=true]$($ACRCred.Password)"
+        azurePowerShellVersion: 'LatestVersion'
     
 
  
