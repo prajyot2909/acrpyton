@@ -70,9 +70,13 @@ stages:
           $json = ConvertFrom-Json '$(acrName)'
           Write-Host "JSON:($json)"
           
-          $AKS = $json.parameters.clusterName | select value
-          $ACR = $json.parameters.acrName | select value
+          $AKS = $json.acrName | select value
+
           
+          $ACR = $json.parameters.acrName | select value
+          Write-Host "ACR:($ACR)"
+
+
           Write-Host "Hello World"
           Write-Host "Using Department:$(ACR)"
           Write-Host "$(AKS)"
