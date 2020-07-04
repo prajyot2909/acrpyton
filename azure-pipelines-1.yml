@@ -75,7 +75,7 @@ stages:
           echo "##vso[task.setvariable variable=ACRName;isOutput=true]$($ACR.name)"
           echo "##vso[task.setvariable variable=AKSName;isOutput=true]$($AKS.name)"
           
-          $ACRCred = Get-AzContainerRegistryCredential -ResourceGroupName "madhur-rg" -Name "acrCluster01"
+          $ACRCred = Get-AzContainerRegistryCredential -ResourceGroupName "madhur-rg" -Name "($ACR)"
           
           echo "##vso[task.setvariable variable=UserName;isOutput=true]$($ACRCred.Username)"
           echo "##vso[task.setvariable variable=Password;isOutput=true]$($ACRCred.Password)"
