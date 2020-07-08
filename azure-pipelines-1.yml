@@ -63,7 +63,12 @@ stages:
       inputs:
         azureSubscription: 'Free Trial(85e6bef8-2ce5-4936-b26a-102ce2668487)'
         ScriptType: 'InlineScript'
-        Inline: |        
+        Inline: |  
+         $json = (Get-Content "$(/home/vsts/work/1/a/ACRAKSParamter.json" -Raw) | ConvertFrom-Json
+          
+          $AKS = $json.resources | where {$_.type -eq "Microsoft.ContainerService/managedClusters"} | select name
+          $ACR = $json.resources | where {$_.type -eq "Microsoft.ContainerRegistry/registries"} | select name
+      
 
           $ACRCred = Get-AzContainerRegistryCredential -ResourceGroupName "madhur-rg" -Name "acrCluster01"
  
