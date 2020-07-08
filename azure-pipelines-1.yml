@@ -72,7 +72,7 @@ stages:
         azurePowerShellVersion: 'LatestVersion'
 
  
-  - job: Infrasturcture
+  - job: Application
     steps:
       -  task: PowerShell@2
          inputs:
