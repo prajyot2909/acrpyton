@@ -80,7 +80,7 @@ stages:
           targetType: 'inline'
           script: |
             docker login acrCluster01.azurecr.io --username 'prajyot9922@outlook.com' -- password 'Mega@101'
-            docker build 
+            
            
     
       
