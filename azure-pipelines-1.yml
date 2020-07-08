@@ -63,10 +63,10 @@ stages:
       inputs:
         azureSubscription: 'Free Trial(85e6bef8-2ce5-4936-b26a-102ce2668487)'
         ScriptType: 'InlineScript'
-        Inline: |         
+        Inline: |        
 
-          $ACRCred = Get-AzContainerRegistryCredential -ResourceGroupName "madhur-rg" -Name "acrCluster01"
-          
+          $ACRCred = Get-AzContainerRegistryCredential -ResourceGroupName "madhur-rg" -Name "- task: PowerShell@2
+ 
           echo "##vso[task.setvariable variable=UserName;isOutput=true]$($ACRCred.Username)"
           echo "##vso[task.setvariable variable=Password;isOutput=true]$($ACRCred.Password)"
         azurePowerShellVersion: 'LatestVersion'
@@ -75,13 +75,14 @@ stages:
   - job: Application
     dependsOn: Infrasturcture
     steps:
-      -  task: PowerShell@2
-         inputs:
-            targetType: 'inline'
-            script: |
-              # Write your PowerShell commands here.
-              
-              Write-Host "$(UserName)"
+    - task: PowerShell@2
+      inputs:      
+          targetType: 'inline'
+          script: |
+            docker login acrCluster01.azurecr.io
+             --username 'prajyot9922@outlook.com'
+             -- password 'Mega@101'
+           
     
       
 
