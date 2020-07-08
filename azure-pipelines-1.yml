@@ -73,7 +73,7 @@ stages:
 
  
   - job: Application
-    dependsOn: Infrastructure
+    dependsOn: Infrasturcture
     steps:
       -  task: PowerShell@2
          inputs:
