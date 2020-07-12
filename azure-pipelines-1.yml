@@ -84,7 +84,7 @@ stages:
       inputs:      
           targetType: 'inline'
           script: |
-            docker login acrCluster01.azurecr.io --username 'd7c6f810-e77a-41ad-aae6-4736f7adf730' -- password 'Dz~x.2Uu5-7VN2h7mv7.KjW9Ao~kG7Wv-P'
+            docker login acrCluster01.azurecr.io 
             
            
     
