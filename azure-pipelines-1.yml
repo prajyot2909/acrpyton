@@ -84,7 +84,7 @@ stages:
       inputs:      
           targetType: 'inline'
           script: |
-           docker login $ACR_NAME.azurecr.io -u $SP_APP_ID -p $SP_PASSWD
+           winpty docker login $ACR_NAME.azurecr.io -u $SP_APP_ID -p $SP_PASSWD
             
            
     
