@@ -80,9 +80,7 @@ stages:
   - job: Application
     dependsOn: Infrasturcture
     steps:
-    - task: Docker@2
-      inputs:
-        command: 'login'
+    
     - task: PowerShell@2
       inputs:      
           targetType: 'inline'
