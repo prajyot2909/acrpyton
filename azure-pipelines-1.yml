@@ -35,30 +35,30 @@ stages:
         artifactName: 'drop'
         targetPath: '$(Build.ArtifactStagingDirectory)'   
 
-    - task: AzureResourceManagerTemplateDeployment@3
-      inputs:      
-        deploymentScope: 'Resource Group'
-        azureResourceManagerConnection: 'Free Trial(85e6bef8-2ce5-4936-b26a-102ce2668487)'
-        subscriptionId: '85e6bef8-2ce5-4936-b26a-102ce2668487'
-        action: 'Create Or Update Resource Group'
-        resourceGroupName: 'madhur-rg'
-        location: 'Central US'
-        templateLocation: 'Linked artifact'
-        csmFile: '/home/vsts/work/1/a/ACRAKS.json'
-        csmParametersFile: '/home/vsts/work/1/a/ACRAKSParamter.json'
-        deploymentMode: 'Incremental'
-        deploymentName: 'acrDeployement'
-        deploymentOutputs: 'acrName'
+    # - task: AzureResourceManagerTemplateDeployment@3
+    #   inputs:      
+    #     deploymentScope: 'Resource Group'
+    #     azureResourceManagerConnection: 'Free Trial(85e6bef8-2ce5-4936-b26a-102ce2668487)'
+    #     subscriptionId: '85e6bef8-2ce5-4936-b26a-102ce2668487'
+    #     action: 'Create Or Update Resource Group'
+    #     resourceGroupName: 'madhur-rg'
+    #     location: 'Central US'
+    #     templateLocation: 'Linked artifact'
+    #     csmFile: '/home/vsts/work/1/a/ACRAKS.json'
+    #     csmParametersFile: '/home/vsts/work/1/a/ACRAKSParamter.json'
+    #     deploymentMode: 'Incremental'
+    #     deploymentName: 'acrDeployement'
+    #     deploymentOutputs: 'acrName'
             
-    - task: PowerShell@2
-      inputs:
-            targetType: 'inline'
-            script: |
-              # Write your PowerShell commands here.
+    # - task: PowerShell@2
+    #   inputs:
+    #         targetType: 'inline'
+    #         script: |
+    #           # Write your PowerShell commands here.
               
-              Write-Host "$(acrName)"
+    #           Write-Host "$(acrName)"
     
-    # - task: AzurePowerShell@5
+    # # - task: AzurePowerShell@5
     #   name: AzurePowershell
     #   inputs:
     #     azureSubscription: 'Free Trial(85e6bef8-2ce5-4936-b26a-102ce2668487)'
@@ -84,7 +84,7 @@ stages:
       inputs:      
           targetType: 'inline'
           script: |
-            az login --service-principal --username 'd7c6f810-e77a-41ad-aae6-4736f7adf730' --tenant 'cb826a12-05ca-45a7-a662-4b11526d9845'  --'Dz~x.2Uu5-7VN2h7mv7.KjW9Ao~kG7Wv-P'
+            az login --service-principal --username 'd7c6f810-e77a-41ad-aae6-4736f7adf730' --tenant 'cb826a12-05ca-45a7-a662-4b11526d9845'  --password 'Dz~x.2Uu5-7VN2h7mv7.KjW9Ao~kG7Wv-P'
             docker login acrCluster01.azurecr.io 
             
            
