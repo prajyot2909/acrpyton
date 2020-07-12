@@ -84,8 +84,8 @@ stages:
     - task: PowerShell@2
       inputs:      
           targetType: 'inline'
-          script: |
-            echo $SP_PASSWD| docker login $ACR_NAME.azurecr.io -u $SP_APP_ID -p $SP_PASSWD
+          script: |            
+            echo ${{ secrets.ACR_SERVICE_PRINCIPAL_PASSWORD }} | docker login --username ${{ SP_APP_ID }} --password-stdin $ACR_NAME.azurecr.io
             
            
     
