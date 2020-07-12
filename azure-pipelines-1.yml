@@ -80,18 +80,11 @@ stages:
   - job: Application
     dependsOn: Infrasturcture
     steps:
-    - task: AzureCLI@2
-      inputs:
-        azureSubscription: 'Free Trial(85e6bef8-2ce5-4936-b26a-102ce2668487)'
-        scriptType: 'batch'
-        scriptLocation: 'inlineScript'
-        inlineScript: 'az login --service-principal --username $SP_APP_ID --password $SP_PASSWD --tenant ''cb826a12-05ca-45a7-a662-4b11526d9845'' az acr login --name $ACR_NAME'
-    # - task: PowerShell@2
-    #   inputs:      
-    #       targetType: 'inline'
-    #       script: |            
-    #         echo $SP_PASSWD | docker login --username $SP_APP_ID --password-stdin $ACR_NAME.azurecr.io
-            
+      - task: PowerShell@2
+        inputs:
+          targetType: 'inline'
+          script: |
+            docker login $ACR_NAME.azurecr.io -u $SP_APP_ID -p $SP_PASSWD
            
     
       
