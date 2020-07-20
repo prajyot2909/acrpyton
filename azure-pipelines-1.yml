@@ -85,7 +85,7 @@ stages:
           targetType: 'inline'
           script: |
              
-             docker login $ACR_NAME.azurecr.io -u $SP_APP_ID -p $SP_PASSWD
+             docker login "$ACR_NAME".azurecr.io -u "$SP_APP_ID" -p "$SP_PASSWD"
             
            
     
