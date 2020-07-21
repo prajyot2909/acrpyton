@@ -88,6 +88,7 @@ stages:
         inlineScript: |
           az --version
           az account show
+          az acr login -n ${ACR_NAME}
     # - task: PowerShell@2
     #   inputs:
     #       targetType: 'inline'
