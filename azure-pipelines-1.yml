@@ -88,7 +88,8 @@ stages:
         inlineScript: |
           az --version
           az account show
-          az acr show --query networkRuleSet --name acrCluster01
+          az acr show  --name acrCluster01
+
     # - task: PowerShell@2
     #   inputs:
     #       targetType: 'inline'
