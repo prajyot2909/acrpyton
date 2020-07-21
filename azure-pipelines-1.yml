@@ -80,12 +80,20 @@ stages:
   - job: Application
     dependsOn: Infrasturcture
     steps:
-      - task: PowerShell@2
-        inputs:
-          targetType: 'inline'
-          script: |
+    - task: AzureCLI@2
+      inputs:
+        azureSubscription: 'Free Trial(85e6bef8-2ce5-4936-b26a-102ce2668487)'
+        scriptType: 'ps'
+        scriptLocation: 'inlineScript'
+        inlineScript: |
+          az --version
+          az account show
+    # - task: PowerShell@2
+    #   inputs:
+    #       targetType: 'inline'
+    #       script: |
              
-             docker login "$ACR_NAME".azurecr.io -u "$SP_APP_ID" -p "$SP_PASSWD"
+    #          docker login "$ACR_NAME".azurecr.io -u "$SP_APP_ID" -p "$SP_PASSWD"
             
            
     
