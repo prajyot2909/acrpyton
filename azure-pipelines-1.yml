@@ -83,7 +83,7 @@ stages:
     - task: AzureCLI@2
       inputs:
         azureSubscription: 'Free Trial(85e6bef8-2ce5-4936-b26a-102ce2668487)'
-        scriptType: 'ps'
+        scriptType: 'bash'
         scriptLocation: 'inlineScript'
         inlineScript: |
           az --version
