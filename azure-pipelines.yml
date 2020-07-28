@@ -1,79 +1,112 @@
-# Deploy to Azure Kubernetes Service
-# Build and push image to Azure Container Registry; Deploy to Azure Kubernetes Service
-# https://docs.microsoft.com/azure/devops/pipelines/languages/docker
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
 
 trigger:
 - master
 
-resources:
-- repo: self
-
-variables:
-
-  # Container registry service connection established during pipeline creation
-  dockerRegistryServiceConnection: '5b39983f-99b9-4132-9785-a3166b6555a9'
-  imageRepository: 'prajyotacrpyton'
-  containerRegistry: 'acrcluster.azurecr.io'
-  dockerfilePath: '**/Dockerfile'
-  tag: '$(Build.BuildId)'
-  imagePullSecret: 'acrcluster8424832c-auth'
-
-  # Agent VM image name
-  vmImageName: 'ubuntu-latest'
-  
-
 stages:
-- stage: Build
-  displayName: Build stage
-  jobs:  
-  - job: Build
-    displayName: Build
-    pool:
-      vmImage: $(vmImageName)
-    steps:
-    - task: Docker@2
-      displayName: Build and push an image to container registry
-      inputs:
-        command: buildAndPush
-        repository: $(imageRepository)
-        dockerfile: $(dockerfilePath)
-        containerRegistry: $(dockerRegistryServiceConnection)
-        tags: |
-          $(tag)
-          
-    - upload: manifests
-      artifact: manifests
-
-- stage: Deploy
-  displayName: Deploy stage
-  dependsOn: Build
-
+- stage : GenerateArtefact
   jobs:
-  - deployment: Deploy
-    displayName: Deploy
-    pool:
-      vmImage: $(vmImageName)
-    environment: 'prajyot2909acrpyton-5285.aks0207'
-    strategy:
-      runOnce:
-        deploy:
-          steps:
-          - task: KubernetesManifest@0
-            displayName: Create imagePullSecret
-            inputs:
-              action: createSecret
-              secretName: $(imagePullSecret)
-              dockerRegistryEndpoint: $(dockerRegistryServiceConnection)
-              
-          - task: KubernetesManifest@0
-            displayName: Deploy to Kubernetes cluster
-            inputs:
-              action: deploy
-              manifests: |
-                $(Pipeline.Workspace)/manifests/deployment.yml
-                $(Pipeline.Workspace)/manifests/service.yml
-              imagePullSecrets: |
-                $(imagePullSecret)
-              containers: |
-                $(containerRegistry)/$(imageRepository):$(tag)
+    - job: Artefact
+      steps:
+      - task: CopyFiles@2
+        inputs:
+          SourceFolder: 'armtemplate/'
+          Contents: '**'
+          TargetFolder: '$(Build.ArtifactStagingDirectory)'
+      - task: PublishBuildArtifacts@1
+        inputs:
+          PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+          ArtifactName: 'drop'
+          publishLocation: 'Container'
+        
+      
+- stage : InfrastructureDeployment
+  pool:
+   vmImage: 'ubuntu-latest' 
+  jobs: 
+  - job: Infrasturcture
+    steps:
+    - task: DownloadPipelineArtifact@2
+      inputs:
+        buildType: 'current'
+        artifactName: 'drop'
+        targetPath: '$(Build.ArtifactStagingDirectory)'   
 
+    # - task: AzureResourceManagerTemplateDeployment@3
+    #   inputs:      
+    #     deploymentScope: 'Resource Group'
+    #     azureResourceManagerConnection: 'Free Trial(85e6bef8-2ce5-4936-b26a-102ce2668487)'
+    #     subscriptionId: '85e6bef8-2ce5-4936-b26a-102ce2668487'
+    #     action: 'Create Or Update Resource Group'
+    #     resourceGroupName: 'madhur-rg'
+    #     location: 'Central US'
+    #     templateLocation: 'Linked artifact'
+    #     csmFile: '/home/vsts/work/1/a/ACRAKS.json'
+    #     csmParametersFile: '/home/vsts/work/1/a/ACRAKSParamter.json'
+    #     deploymentMode: 'Incremental'
+    #     deploymentName: 'acrDeployement'
+    #     deploymentOutputs: 'acrName'
+            
+    # - task: PowerShell@2
+    #   inputs:
+    #         targetType: 'inline'
+    #         script: |
+    #           # Write your PowerShell commands here.
+              
+    #           Write-Host "$(acrName)"
+    
+    # # - task: AzurePowerShell@5
+    #   name: AzurePowershell
+    #   inputs:
+    #     azureSubscription: 'Free Trial(85e6bef8-2ce5-4936-b26a-102ce2668487)'
+    #     ScriptType: 'InlineScript'
+    #     Inline: |  
+    #      $json = (Get-Content "$(/home/vsts/work/1/a/ACRAKSParamter.json -Raw)" | ConvertFrom-Json
+          
+    #       $AKS = $json.resources | where {$_.type -eq "Microsoft.ContainerService/managedClusters"} | select name
+    #       $ACR = $json.resources | where {$_.type -eq "Microsoft.ContainerRegistry/registries"} | select name
+      
+
+    #       $ACRCred = Get-AzContainerRegistryCredential -ResourceGroupName "madhur-rg" -Name "acrCluster01"
+ 
+    #       echo "##vso[task.setvariable variable=UserName;isOutput=true]$($ACRCred.Username)"
+    #       echo "##vso[task.setvariable variable=Password;isOutput=true]$($ACRCred.Password)"
+    #     azurePowerShellVersion: 'LatestVersion'
+
+ 
+  - job: Application
+    dependsOn: Infrasturcture
+    steps:
+    - task: AzureCLI@2
+      inputs:
+        azureSubscription: 'Free Trial(85e6bef8-2ce5-4936-b26a-102ce2668487)'
+        scriptType: 'bash'
+        scriptLocation: 'inlineScript'
+        inlineScript: |
+          az --version
+          az account show
+          az acr show  --name acrCluster01
+    # - task: PowerShell@2
+    #   inputs:
+    #       targetType: 'inline'
+    #       script: |
+             
+    #          docker login "$ACR_NAME".azurecr.io -u "$SP_APP_ID" -p "$SP_PASSWD"
+            
+           
+    
+      
+
+
+    
+
+ 
+# - stage : CodeDeployment
+#   dependsOn: InfrastructureDeployment 
+#   pool:
+#    vmImage: 'ubuntu-latest' 
+#   jobs:
+#     - job: CodeDeployment
